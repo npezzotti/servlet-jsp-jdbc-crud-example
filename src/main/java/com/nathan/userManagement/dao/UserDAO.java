@@ -12,8 +12,8 @@ import com.nathan.userManagement.model.User;
 
 public class UserDAO {
 
-	private String jdbcUrl = "jdbc:mysql://localhost:3306/demo?allowPublicKeyRetrieval=true&useSSL=false";
-	private String jdbcUsername = "root";
+	private String jdbcUrl = "jdbc:postgresql://localhost:5432/app";
+	private String jdbcUsername = "postgres";
 	private String jdbcPassword = "password";
 	
 	private static final String INSERT_USERS_SQL = "INSERT INTO users (name, email, country) VALUES (?, ?, ?);";
@@ -22,14 +22,14 @@ public class UserDAO {
 	private static final String DELETE_USERS_SQL = "DELETE FROM users WHERE id = ?;";
 	private static final String UPDATE_USERS_SQL = "UPDATE users SET name = ?, email = ?, country = ? WHERE id = ?;";
 
-	protected Connection getConnection() {
+	protected Connection getConnection() throws SQLException {
 		
 		Connection connection = null;
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return connection;
