@@ -27,28 +27,28 @@
 					<input type="hidden" name="id" value="<c:out value='${user.id}' />" />
 				</c:if>
 				<div class="form-group">
-					<label>User Name</label>
+					<label for="name">User Name</label>
 					<input type="text"
 						value="<c:out value='${user.name}' />" 
 						class="form-control" 
 						name="name" 
-						required="required">
+						required />
 				</div>
 				<div class="form-group">
-					<label>User Email</label> 
+					<label for="email">User Email</label> 
 					<input type="text"
 						value="<c:out value='${user.email}' />" 
 						class="form-control"
 						name="email"
-						required="required">
+						required />
 				</div>
 				<div class="form-group">
-					<label>User Country</label> 
+					<label for="">User Country</label> 
 					<input type="text"
 						value="<c:out value='${user.country}' />" 
 						class="form-control"
 						name="country"
-						required="required">
+						required />
 				</div>
 				<button type="submit" class="btn btn-success mt-2">Save</button>
 				</form>

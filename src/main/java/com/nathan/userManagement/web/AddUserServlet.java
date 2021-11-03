@@ -28,10 +28,11 @@ public class AddUserServlet extends HttpServlet {
 		showNewForm(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		try {
 			insertUser(request, response);
-		} catch (SQLException | ServletException | IOException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

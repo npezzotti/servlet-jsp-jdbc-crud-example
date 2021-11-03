@@ -29,7 +29,7 @@ public class UserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			getAllUsers(request, response);
-		} catch (SQLException | ServletException | IOException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
