@@ -27,7 +27,7 @@
 					<input type="hidden" name="id" value="<c:out value='${user.id}' />" />
 				</c:if>
 				<div class="form-group">
-					<label for="name">User Name</label>
+					<label for="name">Name</label>
 					<input type="text"
 						value="<c:out value='${user.name}' />" 
 						class="form-control" 
@@ -35,7 +35,7 @@
 						required />
 				</div>
 				<div class="form-group">
-					<label for="email">User Email</label> 
+					<label for="email">Email</label> 
 					<input type="text"
 						value="<c:out value='${user.email}' />" 
 						class="form-control"
@@ -43,7 +43,15 @@
 						required />
 				</div>
 				<div class="form-group">
-					<label for="">User Country</label> 
+					<label for="password">Password</label> 
+					<input type="text"
+						value="<c:out value='${user.password}' />" 
+						class="form-control"
+						name="password"
+						required />
+				</div>
+				<div class="form-group">
+					<label for="">Country</label> 
 					<input type="text"
 						value="<c:out value='${user.country}' />" 
 						class="form-control"

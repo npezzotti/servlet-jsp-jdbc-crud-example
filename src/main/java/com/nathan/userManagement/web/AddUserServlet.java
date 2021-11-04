@@ -41,8 +41,10 @@ public class AddUserServlet extends HttpServlet {
 			throws SQLException, ServletException, IOException {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		System.out.println(password);
 		String country = request.getParameter("country");
-		User newUser = new User(name, email, country);
+		User newUser = new User(name, email, password, country);
 		userDAO.insertUser(newUser);
 		response.sendRedirect("/servlet-jsp-jdbc-crud-example");
 	}

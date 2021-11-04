@@ -22,8 +22,9 @@
 					class="navbar-brand ml-2"> 
 					User Catalog Application
 				</a>
-			</div>
-		</nav>
+				<a class="nav-item my-2 my-lg-0" href="logout">Log out</a>
+		  	</div>
+		</nav>	
 	</header>
 	<jsp:doBody/>
 </body>

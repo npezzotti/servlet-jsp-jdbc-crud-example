@@ -19,7 +19,7 @@
 						<label for="password">Password</label>
 						<input type="text"
 							class="form-control"
-							name="email"
+							name="password"
 							required />
 					</div>
 					<button type="submit" class="btn btn-success mt-2">Login</button>

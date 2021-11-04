@@ -16,11 +16,12 @@ public class UserDAO {
 	private String jdbcUsername = "postgres";
 	private String jdbcPassword = "password";
 	
-	private static final String INSERT_USERS_SQL = "INSERT INTO users (name, email, country) VALUES (?, ?, ?);";
-	private static final String SELECT_USER_BY_ID = "SELECT id, name, email, country FROM users WHERE id = ?;";
+	private static final String INSERT_USERS_SQL = "INSERT INTO users (name, email, password, country) VALUES (?, ?, ?, ?);";
+	private static final String SELECT_USER_BY_ID = "SELECT id, name, email, password, country FROM users WHERE id = ?;";
+	private static final String SELECT_USER_BY_EMAIL = "SELECT id, name, email, password, country FROM users WHERE email = ?;";
 	private static final String SELECT_ALL_USERS = "SELECT * FROM users;";
 	private static final String DELETE_USERS_SQL = "DELETE FROM users WHERE id = ?;";
-	private static final String UPDATE_USERS_SQL = "UPDATE users SET name = ?, email = ?, country = ? WHERE id = ?;";
+	private static final String UPDATE_USERS_SQL = "UPDATE users SET name = ?, email = ?, password = ?, country = ? WHERE id = ?;";
 
 	protected Connection getConnection() throws SQLException {
 		
@@ -40,7 +41,8 @@ public class UserDAO {
 				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getEmail());
-			preparedStatement.setString(3, user.getCountry());
+			preparedStatement.setString(3, user.getPassword());
+			preparedStatement.setString(4, user.getCountry());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,12 +59,38 @@ public class UserDAO {
 			while (rs.next()) {
 				String name = rs.getString("name");
 				String email = rs.getString("email");
+				String password = rs.getString("password");
 				String country = rs.getString("country");
-				user = new User(id, name, email, country);
+				user = new User(id, name, email, password, country);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return user;
+	}
+	
+	public User getUserByEmail(String emailAddress) throws SQLException {
+		User user = null;
+		
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_EMAIL)) {
+			preparedStatement.setString(1, emailAddress);
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String password = rs.getString("password");
+				String country = rs.getString("country");
+				user = new User(id, name, email, password, country);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(user);
+		
 		return user;
 	}
 	
@@ -76,9 +104,10 @@ public class UserDAO {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
+				String password = rs.getString("password");
 				String country = rs.getString("country");
 				
-				users.add(new User(id, name, email, country));
+				users.add(new User(id, name, email, password, country));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -54,8 +54,9 @@ public class EditUserServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		String country = request.getParameter("country");
-		User updatedUser = new User(id, name, email, country);
+		User updatedUser = new User(id, name, email, password, country);
 		userDAO.updateUser(updatedUser);
 		response.sendRedirect("/servlet-jsp-jdbc-crud-example");
 	}
