@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nathan.userManagement.beans.User;
 import com.nathan.userManagement.dao.UserDAO;
-import com.nathan.userManagement.model.User;
 
 
 @WebServlet(urlPatterns = { "/" })
@@ -27,11 +27,12 @@ public class UserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		
 		try {
 			getAllUsers(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}			
 	}
 	
 	private void getAllUsers(HttpServletRequest request, HttpServletResponse response) 

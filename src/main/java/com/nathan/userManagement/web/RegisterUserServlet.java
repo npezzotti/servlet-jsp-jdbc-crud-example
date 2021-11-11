@@ -10,21 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nathan.userManagement.beans.User;
 import com.nathan.userManagement.dao.UserDAO;
-import com.nathan.userManagement.model.User;
+import com.nathan.userManagement.util.AuthUtils;
 
 
-@WebServlet(urlPatterns = { "/new" })
-public class AddUserServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/register" })
+public class RegisterUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDAO userDAO;
 
-    public AddUserServlet() {
+    public RegisterUserServlet() {
         super();
         this.userDAO = new UserDAO();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		showNewForm(request, response);
 	}
 
@@ -42,16 +44,16 @@ public class AddUserServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		System.out.println(password);
+		String hash = AuthUtils.generatePasswordHash(password);
 		String country = request.getParameter("country");
-		User newUser = new User(name, email, password, country);
+		User newUser = new User(name, email, hash, country);
 		userDAO.insertUser(newUser);
-		response.sendRedirect("/servlet-jsp-jdbc-crud-example");
-	}
+		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp");
+		dispatcher.forward(request, response);	}
 	
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/user-form.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/register.jsp");
 		dispatcher.forward(request, response);
 	}
 

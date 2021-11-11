@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nathan.userManagement.model.User;
+import com.nathan.userManagement.beans.User;
 
 public class UserDAO {
 
@@ -88,9 +88,7 @@ public class UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(user);
-		
+				
 		return user;
 	}
 	
@@ -133,8 +131,9 @@ public class UserDAO {
 				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SQL)) {
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getEmail());
-			preparedStatement.setString(3, user.getCountry());
-			preparedStatement.setInt(4, user.getId());
+			preparedStatement.setString(3, user.getPassword());
+			preparedStatement.setString(4, user.getCountry());
+			preparedStatement.setInt(5, user.getId());
 			
 			rowUpdated = preparedStatement.executeUpdate() > 0;
 		}

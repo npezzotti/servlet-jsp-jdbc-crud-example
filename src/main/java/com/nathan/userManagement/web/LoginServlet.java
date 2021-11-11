@@ -6,16 +6,18 @@ import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nathan.userManagement.beans.User;
 import com.nathan.userManagement.dao.UserDAO;
-import com.nathan.userManagement.model.User;
+import com.nathan.userManagement.util.AuthUtils;
 
 
-@WebServlet("/login")
+@WebServlet(urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDAO userDAO;
@@ -31,34 +33,37 @@ public class LoginServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
         
-        System.out.println(email);
-        System.out.println(password);
-       
-        String error = null;
+        User user = null;
         
-        if (request.getAttribute("user") == null) {
-        	try {
-        		User user = userDAO.getUserByEmail(email);
-        		if (user == null) {
-        			error = "User Name or password invalid";
-        		}
-        	} catch (SQLException e) {
-        		e.printStackTrace();
-        		error = e.getMessage();
-        	}
-        }
-        
-        if (error != null) {
-        	request.setAttribute("error", error);
-        	RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp");
-        	dispatcher.forward(request, response);
-        } else {
-        	response.sendRedirect("/servlet-jsp-jdbc-crud-example");
-        }
+        try {
+			user = userDAO.getUserByEmail(email);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (user != null && AuthUtils.authenticate(user, password)) {
+			
+            HttpSession oldSession = request.getSession(false);
+            if (oldSession != null) {
+                oldSession.invalidate();
+            }
+            
+			HttpSession newSession=request.getSession(true);
+			newSession.setMaxInactiveInterval(10*60);
+			newSession.setAttribute("user", user);
+			response.sendRedirect(request.getContextPath());
+		} else {
+			String error = "Email or password invalid.";
+			request.setAttribute("error", error);
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp");
+			dispatcher.forward(request, response);
+		}
+		
 	}
 
 }

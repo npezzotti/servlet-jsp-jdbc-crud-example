@@ -11,7 +11,7 @@
 					<form action="edit" method="post">
 				</c:if>
 				<c:if test="${user == null}">
-					<form action="new" method="post">
+					<form action="register" method="post">
 				</c:if>
 				<div>
 					<h2>

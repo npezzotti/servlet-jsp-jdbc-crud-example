@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nathan.userManagement.beans.User;
 import com.nathan.userManagement.dao.UserDAO;
-import com.nathan.userManagement.model.User;
 
 
 @WebServlet(urlPatterns = { "/edit" })
@@ -58,7 +58,7 @@ public class EditUserServlet extends HttpServlet {
 		String country = request.getParameter("country");
 		User updatedUser = new User(id, name, email, password, country);
 		userDAO.updateUser(updatedUser);
-		response.sendRedirect("/servlet-jsp-jdbc-crud-example");
+		response.sendRedirect(request.getContextPath());
 	}
 
 }

@@ -7,4 +7,6 @@
 
 <t:base title="Not Found"/>
 
-<h1>Page Not Found</h1>
+<div class="container d-flex justify-content-center mt-5">
+	<h2>404 Not Found</h2>
+</div>

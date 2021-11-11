@@ -1,7 +1,4 @@
-/**
- * 
- */
-package com.nathan.userManagement.model;
+package com.nathan.userManagement.beans;
 
 
 public class User {

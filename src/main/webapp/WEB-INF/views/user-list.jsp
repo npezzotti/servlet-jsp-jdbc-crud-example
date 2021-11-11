@@ -5,16 +5,8 @@
 
 <t:base title="User List">
 	<div class="container mt-2">
-		<h3 class="text-center">List of Users</h3>
+		<h3 class="text-center">List of Books</h3>
 		<hr>
-		<div class="container text-left">
-	
-			<a href="new" 
-				class="btn btn-success">
-				Add New User
-			</a>
-		</div>
-		<br>
 		<table class="table table-striped">
 			<thead>
 				<tr>
