@@ -6,24 +6,9 @@ public class User {
 	private int id;
 	private String name;
 	private String email;
-	private String country;
 	private String password;
 
-	public User(int id, String name, String email, String password, String country) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.country = country;
-	}
-
-	public User(String name, String email, String password, String country) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.country = country;
+	public User() {
 	}
 
 	public int getId() {
@@ -58,17 +43,9 @@ public class User {
 		this.password = password;
 	}
 
-	public String getCountry() {
-		return country;
-	}
-	
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", country=" + country + "]";
+		return "User [id=" + id + ", name=" + name + ", email=" + email + "]";
 	}
 
 }

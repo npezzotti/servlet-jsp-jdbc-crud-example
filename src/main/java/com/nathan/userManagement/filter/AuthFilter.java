@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebFilter(urlPatterns = { "/" })
+@WebFilter(urlPatterns = {
+		"/", 
+		"/edit", 
+		"/delete"
+		})
 public class AuthFilter implements Filter {
 
 	public AuthFilter() {
