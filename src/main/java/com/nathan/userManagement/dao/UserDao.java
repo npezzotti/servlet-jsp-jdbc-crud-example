@@ -13,10 +13,10 @@ public interface UserDao {
 	static final String DELETE_USERS_SQL = "DELETE FROM users WHERE id = ?;";
 	static final String UPDATE_USERS_SQL = "UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?;";
 	
-	public void insertUser(User user) throws SQLException;
+	public boolean saveUser(User user) throws SQLException;
 	public User getUserById(int id) throws SQLException;
 	public User getUserByEmail(String emailAddress) throws SQLException;
 	public List<User> getAllUsers() throws SQLException;
-	public boolean deleteUser(int id) throws SQLException;
+	public boolean deleteUser(User user) throws SQLException;
 	public boolean updateUser(User user) throws SQLException;
 }

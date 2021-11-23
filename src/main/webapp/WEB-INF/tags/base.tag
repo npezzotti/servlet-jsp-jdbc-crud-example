@@ -15,28 +15,24 @@
 		crossorigin="anonymous">
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<div class="container-md">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a href="<%=request.getContextPath()%>" 
-						class="navbar-brand ml-2"> 
-						User Catalog Application
-					</a>
-				</li>
-				<li class="nav-item">
-			    	<a class="nav-item" href="edit?id=<c:out value='${user.id}' />">Edit Profile</a>
-			    </li>
-			</ul>
-			<ul class="navbar-nav ml-auto">
-			    <li class="nav-item">
-					<a class="nav-item my-2 my-lg-0" href="logout">Log out</a>
-				</li>
-			</ul>
-		  	</div>
-		</nav>	
-	</header>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a href="<%=request.getContextPath()%>" 
+					class="navbar-brand"> 
+					Social Media Application
+			</a>
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item">
+			    		<a class="nav-link" href="edit?id=<c:out value='${user.id}' />">Edit Profile</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="logout">Log out</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>	
 	<jsp:doBody/>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 

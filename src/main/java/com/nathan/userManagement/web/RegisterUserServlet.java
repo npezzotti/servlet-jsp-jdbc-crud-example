@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nathan.userManagement.beans.User;
 import com.nathan.userManagement.service.UserServiceImpl;
 
 
@@ -35,7 +36,9 @@ public class RegisterUserServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 		
-		userService.insertUser(name, email, password);
+		User newUser = new User(name, email, password);
+		
+		userService.saveUser(newUser);
 		
 		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp");
 		dispatcher.forward(request, response);

@@ -20,12 +20,6 @@ import javax.servlet.http.HttpSession;
 		})
 public class AuthFilter implements Filter {
 
-	public AuthFilter() {
-    }
-
-	public void destroy() {
-	}
-
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
@@ -39,7 +33,14 @@ public class AuthFilter implements Filter {
 		}
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException {
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+
+	}
+
+	@Override
+	public void destroy() {
+
 	}
 
 }

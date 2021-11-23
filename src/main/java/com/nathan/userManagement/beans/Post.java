@@ -4,20 +4,31 @@ import java.sql.Timestamp;
 
 public class Post {
 
-	int postId;
+	int id;
 	int userId;
 	String content;
 	Timestamp createdAt;
 
-	public Post() {
+	public Post(int userId, String content) {
+		super();
+		this.userId = userId;
+		this.content = content;
+	}
+	
+	public Post(int id, int userId, String content, Timestamp createdAt) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.content = content;
+		this.createdAt = createdAt;
 	}
 
-	public int getPostId() {
-		return postId;
+	public int getId() {
+		return id;
 	}
 
-	public void setPostId(int postId) {
-		this.postId = postId;
+	public void setPostId(int id) {
+		this.id = id;
 	}
 
 	public int getUserId() {
@@ -46,7 +57,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [postId=" + postId + ", userId=" + userId + ", content=" + content + ", createdAt=" + createdAt
+		return "Post [id=" + id + ", userId=" + userId + ", content=" + content + ", createdAt=" + createdAt
 				+ "]";
 	}
 }

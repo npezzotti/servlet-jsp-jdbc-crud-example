@@ -8,6 +8,6 @@ public interface PostService {
 
 	public List<Post> getAllPosts();
 	public boolean createPost(Post post);
-	public boolean updatePost(int id, String content);
-	public boolean deletePost(int id);
+	public boolean updatePost(Post post);
+	public boolean deletePost(Post post);
 }

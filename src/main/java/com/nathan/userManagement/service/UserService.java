@@ -10,8 +10,8 @@ public interface UserService {
 	public List<User> getAllUsers();
 	public User getUserById(int id);
 	public User getUserByEmail(String email) throws SQLException;
-	public void insertUser(String name, String email, String password);
-	public boolean deleteUser(int id);
-	public boolean updateUser(int id, String name, String email, String password);
+	public boolean saveUser(User user);
+	public boolean deleteUser(User user);
+	public boolean updateUser(User user);
 	
 }

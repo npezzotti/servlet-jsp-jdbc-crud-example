@@ -47,28 +47,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void insertUser(String name, String email, String password) {
+	public boolean saveUser(User user) {
 		
-		String hash = AuthUtils.generatePasswordHash(password);
+		String hash = AuthUtils.generatePasswordHash(user.getPassword());
+		user.setPassword(hash);
 		
-		User newUser = new User();
-		newUser.setName(name);
-		newUser.setEmail(email);
-		newUser.setPassword(hash);
-		
+		boolean saved = false;
 		try {
-			userDaoImpl.insertUser(newUser);
+			saved = userDaoImpl.saveUser(user);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
-		
+		}
+		return saved;
 	}
 
 	@Override
-	public boolean deleteUser(int id) {
+	public boolean deleteUser(User user) {
 		boolean deleted = false;
 		try {
-			deleted = userDaoImpl.deleteUser(id);
+			deleted = userDaoImpl.deleteUser(user);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -77,16 +74,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean updateUser(int id, String name, String email, String password) {
-		String hash = AuthUtils.generatePasswordHash(password);
-		User updatedUser = new User();
-		updatedUser.setId(id);
-		updatedUser.setName(name);
-		updatedUser.setEmail(email);
-		updatedUser.setPassword(hash);
+	public boolean updateUser(User user) {
+		User userToUpdate = null;
+		try {
+			userToUpdate = userDaoImpl.getUserById(user.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (userToUpdate != null) {
+			userToUpdate.setName(user.getName());
+			userToUpdate.setEmail(user.getEmail());
+			userToUpdate.setPassword(AuthUtils.generatePasswordHash(user.getPassword()));		
+		}
+		
 		boolean updated = false;
 		try {
-			updated = userDaoImpl.updateUser(updatedUser);
+			updated = userDaoImpl.updateUser(userToUpdate);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

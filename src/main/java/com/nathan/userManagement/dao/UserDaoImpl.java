@@ -12,37 +12,36 @@ import com.nathan.userManagement.util.DBUtils;
 
 public class UserDaoImpl implements UserDao {
 	
-	public void insertUser(User user) throws SQLException {
+	public boolean saveUser(User user) throws SQLException {
+		boolean rowSaved = false;
+
 		try (Connection connection = DBUtils.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getEmail());
 			preparedStatement.setString(3, user.getPassword());
-			preparedStatement.executeUpdate();
+			rowSaved = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return rowSaved;
 	}
 	
-	public User getUserById(int id) throws SQLException {
+	public User getUserById(int userId) throws SQLException {
 		User user = null;
 		
 		try (Connection connection = DBUtils.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
-			preparedStatement.setInt(1, id);
+			preparedStatement.setInt(1, userId);
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			while (rs.next()) {
+				int id = rs.getInt("id"); 
 				String name = rs.getString("name");
 				String email = rs.getString("email");
 				String password = rs.getString("password");
 				
-				user = new User();
-				
-				user.setId(id);
-				user.setName(name);
-				user.setEmail(email);
-				user.setPassword(password);
+				user = new User(id, name, email, password);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,11 +63,7 @@ public class UserDaoImpl implements UserDao {
 				String email = rs.getString("email");
 				String password = rs.getString("password");
 				
-				user = new User();
-				user.setId(id);
-				user.setName(name);
-				user.setEmail(email);
-				user.setPassword(password);
+				user = new User(id, name, email, password);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -90,13 +85,13 @@ public class UserDaoImpl implements UserDao {
 				String email = rs.getString("email");
 				String password = rs.getString("password");
 				
-				User user = new User();
+				User user = new User(id, name, email, password);
 				
 				user.setId(id);
 				user.setName(name);
 				user.setEmail(email);
 				user.setPassword(password);
-				
+
 				users.add(user);
 			}
 		} catch (Exception e) {
@@ -105,19 +100,19 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 	
-	public boolean deleteUser(int id) throws SQLException {
-		boolean rowDeleted;
+	public boolean deleteUser(User user) throws SQLException {
+		boolean rowDeleted = false;
 		
 		try (Connection connection = DBUtils.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USERS_SQL)) {
-			preparedStatement.setInt(1, id);
+			preparedStatement.setInt(1, user.getId());
 			rowDeleted = preparedStatement.executeUpdate() > 0;
 		}
 		return rowDeleted;
 	}
 
 	public boolean updateUser(User user) throws SQLException {
-		boolean rowUpdated;
+		boolean rowUpdated = false;
 
 		try (Connection connection = DBUtils.getConnection(); 
 				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SQL)) {

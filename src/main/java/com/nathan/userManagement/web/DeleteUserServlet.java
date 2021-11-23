@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nathan.userManagement.beans.User;
 import com.nathan.userManagement.service.UserServiceImpl;
 
 
@@ -20,7 +21,8 @@ public class DeleteUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		boolean deleted = userServiceImpl.deleteUser(id);
+		User userToDelete = userServiceImpl.getUserById(id);
+		boolean deleted = userServiceImpl.deleteUser(userToDelete);
 		if (deleted) {
 			HttpSession session = request.getSession();
 			session.removeAttribute("user");

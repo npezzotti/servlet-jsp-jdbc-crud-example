@@ -34,8 +34,10 @@ public class EditUserServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		
+		User userToUpdate = new User(id, name, email, password);
 
-		boolean updated = userServiceImpl.updateUser(id, name, email, password);
+		boolean updated = userServiceImpl.updateUser(userToUpdate);
 		
 		if (updated) {
 			response.sendRedirect(request.getContextPath());

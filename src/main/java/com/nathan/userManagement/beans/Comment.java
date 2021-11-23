@@ -10,7 +10,13 @@ public class Comment {
 	String content;
 	Timestamp createdAt;
 	
-	public Comment() {
+	public Comment(int commentId, int userId, int postId, String content, Timestamp createdAt) {
+		super();
+		this.commentId = commentId;
+		this.userId = userId;
+		this.postId = postId;
+		this.content = content;
+		this.createdAt = createdAt;
 	}
 
 	public int getCommentId() {
