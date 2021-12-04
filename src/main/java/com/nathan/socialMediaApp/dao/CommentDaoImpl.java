@@ -27,7 +27,14 @@ public class CommentDaoImpl implements CommentDao {
 			int userId = rs.getInt("user_id");
 			String content = rs.getString("content");
 			Timestamp createdAt = rs.getTimestamp("created_at");
-			comments.add(new Comment(id, postId, userId, content, createdAt));
+
+			Comment newComment = new Comment();
+			newComment.setId(id);
+			newComment.setPostId(postId);
+			newComment.setUserId(userId);
+			newComment.setContent(content);
+			newComment.setCreatedAt(createdAt);
+			comments.add(newComment);
 		}
 		return comments;
 	}
@@ -43,7 +50,6 @@ public class CommentDaoImpl implements CommentDao {
 		connection.close();
 		return saved;
 	}
-
 
 	@Override
 	public boolean updateComment(Comment comment) throws SQLException {

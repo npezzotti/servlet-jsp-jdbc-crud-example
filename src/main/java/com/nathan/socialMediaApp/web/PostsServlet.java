@@ -13,19 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import com.nathan.socialMediaApp.model.Post;
 import com.nathan.socialMediaApp.service.PostServiceImpl;
 
-@WebServlet(urlPatterns = { "/" })
+@WebServlet(urlPatterns = { "/posts" })
 public class PostsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	PostServiceImpl postServiceImpl = new PostServiceImpl();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		List<Post> posts = postServiceImpl.getAllPosts();
 		request.setAttribute("posts", posts);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/posts.jsp");
-		dispatcher.forward(request, response);	
+		dispatcher.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

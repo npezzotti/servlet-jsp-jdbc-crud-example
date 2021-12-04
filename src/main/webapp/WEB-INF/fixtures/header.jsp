@@ -4,12 +4,12 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container-fluid">
-		<a href="<%=request.getContextPath()%>" class="navbar-brand">
+		<a href="posts" class="navbar-brand">
 			Social Media Application </a>
 		<div class="collapse navbar-collapse">
 			<ul class="navbar-nav ms-auto">
 				<li class="nav-item"><a class="nav-link"
-					href="edit?id=<c:out value='${user.id}' />">Edit Profile</a></li>
+					href="edit?id=${user.id}">Edit Profile</a></li>
 				<li class="nav-item"><a class="nav-link" href="logout">Log
 						out</a></li>
 			</ul>

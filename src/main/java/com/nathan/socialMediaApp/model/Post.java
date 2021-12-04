@@ -9,22 +9,15 @@ public class Post {
 	String content;
 	Timestamp createdAt;
 
-	public Post(int userId, String content) {
-		super();
-		this.userId = userId;
-		this.content = content;
-	}
-
-	public Post(int id, int userId, String content, Timestamp createdAt) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.content = content;
-		this.createdAt = createdAt;
+	public Post() {
 	}
 
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setPostId(int id) {

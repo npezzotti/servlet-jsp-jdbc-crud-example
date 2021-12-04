@@ -22,10 +22,10 @@ public class DeletePostServlet extends HttpServlet {
 		Post post = postServiceImpl.getPostById(id);
 		boolean deleted = postServiceImpl.deletePost(post);
 		if (deleted) {
-			response.sendRedirect(request.getContextPath() + "/");
+			response.sendRedirect(request.getContextPath() + "/posts");
 		} else {
 //			TODO set error
-			response.sendRedirect(request.getContextPath() + "/");
+			response.sendRedirect(request.getContextPath() + "/posts");
 		}
 
 	}

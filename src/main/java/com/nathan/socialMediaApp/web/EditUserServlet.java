@@ -47,7 +47,7 @@ public class EditUserServlet extends HttpServlet {
 		if (updated) {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", userServiceImpl.getUserById(userToUpdate.getId()));
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath() + "/posts");
 		} else {
 //			TODO - add validation
 			System.out.println("Something went wrong.");

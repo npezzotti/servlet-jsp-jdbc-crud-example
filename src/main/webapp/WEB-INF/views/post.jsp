@@ -8,28 +8,64 @@
 <body>
 	<jsp:include page="../fixtures/header.jsp" />
 	<div class="container mt-2">
+		<div class="container mt-3">
+			<div class="row">
+				<div class="container">
+					<div class="">
+						<div class="">
+							<img src="/images/default-profile-picture.png" class=""
+								alt="Profile Picture">
+						</div>
+						<div class="">
+							<div class="title h5">
+								<a href="#"><b></b></a>${post.id} User: ${post.userId} posted:
+							</div>
+							<h6 class="text-muted">${post.createdAt}</h6>
+						</div>
+					</div>
+					<p>${post.content}</p>
+					<a href="post/edit?id=${post.id}" class="btn btn-primary btn-sm"
+						role="button">Edit Post</a> <a href="post/delete?id=${post.id}"
+						class="btn btn-danger btn-sm" role="button">Delete Post</a>
+				</div>
+			</div>
+		</div>
 		<div class="container mt-2">
-			<h3>Post</h3>
-			<div
-				class="panel 
-			panel-default
-			border 
-			rounded mb-2
-			bg-gradient-light 
-			text-dark">
-				<div class="panel-heading">
-					<img <c:url value="/images/default-profile-picture.png"/>
-						class="img-thumbnail" />
-					<c:out value="${post.id}" />
-					<c:out value="${post.userId}" />
-					posted at
-					<c:out value="${post.createdAt}" />
-					:
+			<div class="row">
+				<div class="col-md-12">
+					<div class="">
+						<h3>8 Comments</h3>
+						<hr />
+						<ul class="">
+							<li class=""><img src="/images/default-profile-picture.png"
+								class="" alt="">
+								<div class="">
+									<p class="">
+										Dec 18, 2014 User says : <i class="pull-right"></i>
+									</p>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										Etiam a sapien odio, sit amet</p>
+								</div></li>
+							<li class=""><img src="/images/default-profile-picture.png"
+								class="" alt="">
+								<div class="">
+									<p class="">
+										Dec 18, 2014 User says : <i class="pull-right"></i>
+									</p>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										Etiam a sapien odio, sit amet</p>
+								</div></li>
+						</ul>
+					</div>
+					<form class="mb-3" action="post/create" method="post">
+						<div class="form-group">
+							<label for="content">Comment:</label>
+							<textarea class="form-control" name="content" required>
+				</textarea>
+						</div>
+						<button type="submit" class="btn btn-success mt-2">Post</button>
+					</form>
 				</div>
-				<div class="panel-body">
-					<c:out value="${post.content}" />
-				</div>
-				<a href="post/edit?id=<c:out value="${post.id}" />">View Post</a>
 			</div>
 		</div>
 	</div>

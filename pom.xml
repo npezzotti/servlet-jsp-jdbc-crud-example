@@ -7,8 +7,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>servlet-jsp-jdbc-crud-example</groupId>
-	<artifactId>servlet-jsp-jdbc-crud-example</artifactId>
+	<groupId>servlet-jsp-jdbc-social-media-app</groupId>
+	<artifactId>servlet-jsp-jdbc-social-media-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 

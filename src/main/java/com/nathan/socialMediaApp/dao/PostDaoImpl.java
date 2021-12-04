@@ -24,7 +24,11 @@ public class PostDaoImpl implements PostDao {
 			int userId = rs.getInt("user_id");
 			String content = rs.getString("content");
 			Timestamp createdAt = rs.getTimestamp("created_at");
-			Post post = new Post(id, userId, content, createdAt);
+			Post post = new Post();
+			post.setId(id);
+			post.setUserId(userId);
+			post.setContent(content);
+			post.setCreatedAt(createdAt);
 			posts.add(post);
 		}
 		connection.close();
@@ -43,7 +47,11 @@ public class PostDaoImpl implements PostDao {
 			int userId = rs.getInt("user_id");
 			String content = rs.getString("content");
 			Timestamp createdAt = rs.getTimestamp("created_at");
-			post = new Post(postId, userId, content, createdAt);
+			post = new Post();
+			post.setPostId(postId);
+			post.setUserId(userId);
+			post.setContent(content);
+			post.setCreatedAt(createdAt);
 		}
 		connection.close();
 		return post;

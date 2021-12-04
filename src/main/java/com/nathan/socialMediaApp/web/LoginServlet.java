@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession newSession = request.getSession(true);
 			newSession.setMaxInactiveInterval(10 * 60);
 			newSession.setAttribute("user", user);
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath() + "/posts");
 		} else {
 			String error = "Email or password invalid.";
 			request.setAttribute("error", error);

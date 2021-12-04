@@ -30,10 +30,12 @@ public class CreatePostServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		int userId = user.getId();
 		String content = request.getParameter("content");
-		Post newPost = new Post(userId, content);
+		Post newPost = new Post();
+		newPost.setUserId(userId);
+		newPost.setContent(content);
 		boolean created = postServiceImpl.createPost(newPost);
 		if (created) {
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath() + "/posts");
 		} else {
 			request.setAttribute("error", "Unable to create post");
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/posts.jsp");
