@@ -10,7 +10,7 @@
 	<div class="container col-md-5 mt-5">
 		<div class="card">
 			<div class="card-body">
-				<form action="edit?id=${userToEdit.id}" method="post">
+				<form action="${pageContext.request.contextPath}/user/edit?id=${userToEdit.id}" method="post">
 					<h2>Edit User</h2>
 					<div class="form-group">
 						<label for="name">Name</label> <input type="text"
@@ -28,9 +28,9 @@
 							name="password" required />
 					</div>
 					<button type="submit" class="btn btn-primary mt-2">Submit</button>
-					<a href="posts"
+					<a href="${pageContext.request.contextPath}/posts"
 						class="btn btn-secondary mt-2" role="button" aria-pressed="true">Cancel</a>
-					<a href="delete?id=${user.id}" class="btn btn-danger mt-2"
+					<a href="${pageContext.request.contextPath}/user/delete?id=${user.id}" class="btn btn-danger mt-2"
 						role="button" aria-pressed="true">Delete Account</a>
 				</form>
 			</div>

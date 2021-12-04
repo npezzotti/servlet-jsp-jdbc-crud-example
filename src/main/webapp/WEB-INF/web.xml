@@ -8,7 +8,5 @@
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/not-found.jsp</location>
 	</error-page>
-	<welcome-file-list>
-        <welcome-file>/posts</welcome-file>
-    </welcome-file-list>
 </web-app>
+

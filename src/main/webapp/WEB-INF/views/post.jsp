@@ -24,7 +24,7 @@
 						</div>
 					</div>
 					<p>${post.content}</p>
-					<a href="post/edit?id=${post.id}" class="btn btn-primary btn-sm"
+					<a href="${pageContext.request.contextPath}/post/edit?id=${post.id}" class="btn btn-primary btn-sm"
 						role="button">Edit Post</a> <a href="post/delete?id=${post.id}"
 						class="btn btn-danger btn-sm" role="button">Delete Post</a>
 				</div>

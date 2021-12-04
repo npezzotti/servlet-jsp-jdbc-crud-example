@@ -25,7 +25,7 @@
 					</div>
 					<button type="submit" class="btn btn-success mt-2">Register</button>
 					<p class="mt-2">
-						Already have an account? <a href="login">Login here.</a>
+						Already have an account? <a href="${pageContext.request.contextPath}/login">Login here.</a>
 					</p>
 				</form>
 			</div>

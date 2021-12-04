@@ -37,7 +37,7 @@
 								</div>
 							</div>
 							<p>${post.content}</p>
-							<a href="post?id=${post.id}">View Post</a>
+							<a href="${pageContext.request.contextPath}/post?id=${post.id}">View Post</a>
 						</div>
 					</div>
 				</div>

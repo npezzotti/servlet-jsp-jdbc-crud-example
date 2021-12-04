@@ -16,7 +16,8 @@ import javax.servlet.http.HttpSession;
 @WebFilter(urlPatterns = {
 		"/posts/*",
 		"/post/*",
-		"/comment/*"
+		"/comment/*",
+		"/user/*"
 		})
 public class AuthFilter implements Filter {
 

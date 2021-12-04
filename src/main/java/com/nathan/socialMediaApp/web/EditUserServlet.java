@@ -14,7 +14,7 @@ import com.nathan.socialMediaApp.model.User;
 import com.nathan.socialMediaApp.service.UserServiceImpl;
 
 
-@WebServlet(urlPatterns = { "/edit" })
+@WebServlet(urlPatterns = { "/user/edit" })
 public class EditUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserServiceImpl userServiceImpl = new UserServiceImpl();

@@ -13,7 +13,7 @@ import com.nathan.socialMediaApp.model.User;
 import com.nathan.socialMediaApp.service.UserServiceImpl;
 
 
-@WebServlet(urlPatterns = { "/delete" })
+@WebServlet(urlPatterns = { "/user/delete" })
 public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserServiceImpl userServiceImpl = new UserServiceImpl();
