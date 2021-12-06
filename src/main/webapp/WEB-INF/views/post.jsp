@@ -2,72 +2,77 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <jsp:include page="../fixtures/head.jsp" />
 <body>
 	<jsp:include page="../fixtures/header.jsp" />
-	<div class="container mt-2">
-		<div class="container mt-3">
+	<div class="container mt-3">
+		<div class="card border-dark mb-3">
 			<div class="row">
-				<div class="container">
-					<div class="">
-						<div class="">
-							<img src="/images/default-profile-picture.png" class=""
-								alt="Profile Picture">
-						</div>
-						<div class="">
-							<div class="title h5">
-								<a href="#"><b></b></a>${post.id} User: ${post.userId} posted:
+				<div class="col">
+					<div class="card-header">
+						<div class="row align-items-center">
+							<div class="col-sm-1">
+								<img src="<c:url value='/images/default-profile-picture.png'/>"
+									class="img-thumbnail" alt="Profile Picture">
 							</div>
-							<h6 class="text-muted">${post.createdAt}</h6>
+							<div class="col">
+								<h6 class="lead">Nathan Pezzotti:</h6>
+								<small class="text-muted">${post.createdAt}</small>
+							</div>
 						</div>
 					</div>
-					<p>${post.content}</p>
-					<a href="${pageContext.request.contextPath}/post/edit?id=${post.id}" class="btn btn-primary btn-sm"
-						role="button">Edit Post</a> <a href="post/delete?id=${post.id}"
-						class="btn btn-danger btn-sm" role="button">Delete Post</a>
 				</div>
 			</div>
-		</div>
-		<div class="container mt-2">
 			<div class="row">
-				<div class="col-md-12">
-					<div class="">
-						<h3>8 Comments</h3>
-						<hr />
-						<ul class="">
-							<li class=""><img src="/images/default-profile-picture.png"
-								class="" alt="">
-								<div class="">
-									<p class="">
-										Dec 18, 2014 User says : <i class="pull-right"></i>
-									</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Etiam a sapien odio, sit amet</p>
-								</div></li>
-							<li class=""><img src="/images/default-profile-picture.png"
-								class="" alt="">
-								<div class="">
-									<p class="">
-										Dec 18, 2014 User says : <i class="pull-right"></i>
-									</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Etiam a sapien odio, sit amet</p>
-								</div></li>
-						</ul>
-					</div>
-					<form class="mb-3" action="post/create" method="post">
-						<div class="form-group">
-							<label for="content">Comment:</label>
-							<textarea class="form-control" name="content" required>
-				</textarea>
-						</div>
-						<button type="submit" class="btn btn-success mt-2">Post</button>
-					</form>
+				<div class="card-body">
+					<div class="card-text">${post.content}</div>
+					<a href="<c:url value='/post/edit?id=${post.id}'/>">Edit Post</a> <a
+						href="<c:url value='post/delete?id=${post.id}'/>">Delete Post</a>
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col">
+				<h4>8 Comments</h4>
+				<hr />
+			</div>
+		</div>
+		<div class="card mb-3">
+			<div class="row">
+				<div class="col">
+					<div class="card-header">
+						<div class="row align-items-center">
+							<div class="col-sm-1">
+								<img src="<c:url value='/images/default-profile-picture.png'/>"
+									class="img-thumbnail" alt="Profile Picture">
+							</div>
+							<div class="col">
+								<h6 class="lead">Nathan Pezzotti:</h6>
+								<small class="text-muted">${post.createdAt}</small>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-body">
+					<div class="card-text">${post.content}</div>
+					<a href="<c:url value='/comment/edit?id=${post.id}'/>">Edit
+						Comment</a> <a href="<c:url value='/comment/delete?id=${post.id}'/>">Delete
+						Comment</a>
+				</div>
+			</div>
+		</div>
+		<form class="mb-3" action="<c:url value='/comment/create'/>"
+			method="post">
+			<div class="form-group">
+				<label for="content">Comment:</label>
+				<textarea class="form-control" name="content" required></textarea>
+				<button type="submit" class="btn btn-success mt-2">Send</button>
+			</div>
+		</form>
 	</div>
 </body>
 <jsp:include page="../fixtures/scripts.jsp" />

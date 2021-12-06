@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <jsp:include page="../fixtures/head.jsp" />
 <body>
 	<jsp:include page="../fixtures/header.jsp" />
 	<div class="container col-md-5 mt-5">
 		<div class="card">
 			<div class="card-body">
-				<form action="register" method="post">
+				<form action="<c:url value='/register'/>" method="post">
 					<h2>Register</h2>
 					<div class="form-group">
 						<label for="name">Name</label> <input type="text"
@@ -25,7 +26,8 @@
 					</div>
 					<button type="submit" class="btn btn-success mt-2">Register</button>
 					<p class="mt-2">
-						Already have an account? <a href="${pageContext.request.contextPath}/login">Login here.</a>
+						Already have an account? <a href="<c:url value='/login'/>">Login
+							here.</a>
 					</p>
 				</form>
 			</div>
