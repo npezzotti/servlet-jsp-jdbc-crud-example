@@ -1,14 +1,14 @@
 package com.nathan.socialMediaApp.service;
 
-import java.util.List;
+import org.hibernate.Session;
 
 import com.nathan.socialMediaApp.model.Comment;
-import com.nathan.socialMediaApp.model.Post;
 
 public interface CommentService {
 
-	public List<Comment> getCommentsByPost(Post post);
-	public boolean createComment(Comment comment);
-	public boolean updateComment(Comment comment);
-	public boolean deleteComment(Comment comment);
+	public Comment getCommentById(int commentId, Session session);
+
+	public boolean createComment(Comment comment, Session session);
+
+	public boolean deleteComment(Comment comment, Session session);
 }

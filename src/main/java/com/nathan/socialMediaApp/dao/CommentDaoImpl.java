@@ -1,75 +1,57 @@
 package com.nathan.socialMediaApp.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.nathan.socialMediaApp.model.Comment;
-import com.nathan.socialMediaApp.model.Post;
-import com.nathan.socialMediaApp.util.DBUtils;
 
 public class CommentDaoImpl implements CommentDao {
 
 	@Override
-	public List<Comment> getCommentsByPost(Post post) throws SQLException {
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(GET_COMMENTS_BY_POST);
-		List<Comment> comments = new ArrayList<Comment>();
-		preparedStatement.setInt(1, post.getId());
-		ResultSet rs = preparedStatement.executeQuery();
-		while (rs.next()) {
-			int id = rs.getInt("id");
-			int postId = rs.getInt("post_id");
-			int userId = rs.getInt("user_id");
-			String content = rs.getString("content");
-			Timestamp createdAt = rs.getTimestamp("created_at");
-
-			Comment newComment = new Comment();
-			newComment.setId(id);
-			newComment.setPostId(postId);
-			newComment.setUserId(userId);
-			newComment.setContent(content);
-			newComment.setCreatedAt(createdAt);
-			comments.add(newComment);
+	public Comment getCommentById(int commentId, Session session) {
+		Comment comment = null;
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			comment = session.get(Comment.class, commentId);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
 		}
-		return comments;
+		return comment;
 	}
 
 	@Override
-	public boolean createComment(Comment comment) throws SQLException {
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(CREATE_COMMENT);
-		preparedStatement.setInt(1, comment.getUserId());
-		preparedStatement.setInt(2, comment.getPostId());
-		preparedStatement.setString(3, comment.getContent());
-		boolean saved = preparedStatement.executeUpdate() > 0;
-		connection.close();
-		return saved;
+	public boolean createComment(Comment comment, Session session) {
+		int commentId = 0;
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			commentId = (int) session.save(comment);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+		return commentId > 0;
 	}
 
 	@Override
-	public boolean updateComment(Comment comment) throws SQLException {
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COMMENT);
-		preparedStatement.setString(1, comment.getContent());
-		preparedStatement.setInt(2, comment.getId());
-		boolean updated = preparedStatement.executeUpdate() > 0;
-		preparedStatement.close();
-		connection.close();
-		return updated;
-	}
-
-	@Override
-	public boolean deleteComment(Comment comment) throws SQLException {
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMMENT);
-		preparedStatement.setInt(1, comment.getId());
-		boolean deleted = preparedStatement.executeUpdate() > 0;
-		connection.close();
+	public boolean deleteComment(Comment comment, Session session) {
+		boolean deleted = false;
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.delete(comment);
+			tx.commit();
+			deleted = true;
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
 		return deleted;
 	}
 

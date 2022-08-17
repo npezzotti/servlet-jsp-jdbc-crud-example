@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
+
 import com.nathan.socialMediaApp.model.Post;
 import com.nathan.socialMediaApp.model.User;
 import com.nathan.socialMediaApp.service.PostServiceImpl;
+import com.nathan.socialMediaApp.util.HibernateUtil;
 
 @WebServlet(urlPatterns = { "/post/create" })
 public class CreatePostServlet extends HttpServlet {
@@ -26,21 +29,23 @@ public class CreatePostServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Session dbSession = HibernateUtil.getSession();
+
+		String content = request.getParameter("content");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		int userId = user.getId();
-		String content = request.getParameter("content");
 		Post newPost = new Post();
-		newPost.setUserId(userId);
+		newPost.setUser(user);
 		newPost.setContent(content);
-		boolean created = postServiceImpl.createPost(newPost);
+		boolean created = postServiceImpl.createPost(newPost, dbSession);
 		if (created) {
 			response.sendRedirect(request.getContextPath() + "/posts");
 		} else {
-			request.setAttribute("error", "Unable to create post");
+			request.setAttribute("error", "Unable to create post.");
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/posts.jsp");
 			dispatcher.forward(request, response);
 		}
+		dbSession.close();
 	}
 
 }

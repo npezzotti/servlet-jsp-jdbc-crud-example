@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
+
 import com.nathan.socialMediaApp.model.User;
 import com.nathan.socialMediaApp.service.UserServiceImpl;
 import com.nathan.socialMediaApp.util.AuthUtils;
+import com.nathan.socialMediaApp.util.HibernateUtil;
 
 @WebServlet(urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
@@ -27,10 +30,12 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		final String email = request.getParameter("email");
-		final String password = request.getParameter("password");
+		Session session = HibernateUtil.getSession();
+		
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 
-		User user = userServiceImpl.getUserByEmail(email);
+		User user = userServiceImpl.getUserByEmail(email, session);
 
 		if (user != null && AuthUtils.authenticate(user, password)) {
 
@@ -49,6 +54,8 @@ public class LoginServlet extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp");
 			dispatcher.forward(request, response);
 		}
+		
+		session.close();
 
 	}
 

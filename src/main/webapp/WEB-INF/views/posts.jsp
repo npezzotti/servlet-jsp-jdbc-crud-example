@@ -9,6 +9,9 @@
 	<jsp:include page="../fixtures/header.jsp" />
 	<div class="container mt-3">
 		<strong>Welcome ${user.name}!</strong>
+		<c:if test="${error != null}">
+			<div class="alert alert-danger" role="alert">${error}</div>
+		</c:if>
 		<form class="mb-3" action="<c:url value='/post/create'/>"
 			method="post">
 			<div class="form-group mt-2">
@@ -29,7 +32,7 @@
 										class="img-thumbnail" alt="Profile Picture">
 								</div>
 								<div class="col">
-									<h6 class="lead">Nathan Pezzotti:</h6>
+									<h6 class="lead">${post.user.name}</h6>
 									<small class="text-muted">${post.createdAt}</small>
 								</div>
 							</div>

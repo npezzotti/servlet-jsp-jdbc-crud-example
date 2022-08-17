@@ -1,117 +1,96 @@
 package com.nathan.socialMediaApp.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.nathan.socialMediaApp.model.User;
-import com.nathan.socialMediaApp.util.DBUtils;
 
 public class UserDaoImpl implements UserDao {
 
-	public boolean createUser(User user) throws SQLException {
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
-		preparedStatement.setString(1, user.getName());
-		preparedStatement.setString(2, user.getEmail());
-		preparedStatement.setString(3, user.getPassword());
-		boolean rowSaved = preparedStatement.executeUpdate() > 0;
-		connection.close();
-		return rowSaved;
+	public boolean createUser(User user, Session session) {
+		int userId = 0;
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			userId = (int) session.save(user);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+		return userId > 0;
 	}
 
-	public User getUserById(int userId) throws SQLException {
+	public User getUserById(int userId, Session session) {
 		User user = null;
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);
-		preparedStatement.setInt(1, userId);
-		ResultSet rs = preparedStatement.executeQuery();
-
-		while (rs.next()) {
-			int id = rs.getInt("id");
-			String name = rs.getString("name");
-			String email = rs.getString("email");
-			String password = rs.getString("password");
-
-			user = new User();
-			user.setId(id);
-			user.setName(name);
-			user.setEmail(email);
-			user.setPassword(password);
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			user = session.get(User.class, userId);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
 		}
-		connection.close();
 		return user;
 	}
 
-	public User getUserByEmail(String emailAddress) throws SQLException {
+	public User getUserByEmail(String emailAddress, Session session) {
 		User user = null;
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_EMAIL);
-		preparedStatement.setString(1, emailAddress);
-		ResultSet rs = preparedStatement.executeQuery();
-
-		while (rs.next()) {
-			int id = rs.getInt("id");
-			String name = rs.getString("name");
-			String email = rs.getString("email");
-			String password = rs.getString("password");
-
-			user = new User();
-			user.setId(id);
-			user.setName(name);
-			user.setEmail(email);
-			user.setPassword(password);
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from User u where u.email=:email", User.class).setParameter("email",
+					emailAddress);
+			List<User> rs = query.getResultList();
+			tx.commit();
+			if (rs.size() > 0)
+				return rs.get(0);
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
 		}
-		connection.close();
 		return user;
 	}
 
-	public List<User> getAllUsers() throws SQLException {
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);
-		List<User> users = new ArrayList<>();
-		ResultSet rs = preparedStatement.executeQuery();
-		while (rs.next()) {
-			int id = rs.getInt("id");
-			String name = rs.getString("name");
-			String email = rs.getString("email");
-			String password = rs.getString("password");
-
-			User user = new User();
-			user.setId(id);
-			user.setName(name);
-			user.setEmail(email);
-			user.setPassword(password);
-
-			users.add(user);
+	public boolean deleteUser(User user, Session session) {
+		boolean deleted = false;
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.delete(user);
+			tx.commit();
+			deleted = true;
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
 		}
-		connection.close();
-		return users;
+		return deleted;
 	}
 
-	public boolean deleteUser(User user) throws SQLException {
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USERS_SQL);
-		preparedStatement.setInt(1, user.getId());
-		boolean rowDeleted = preparedStatement.executeUpdate() > 0;
-		connection.close();
-		return rowDeleted;
-	}
-
-	public boolean updateUser(User user) throws SQLException {
-		Connection connection = DBUtils.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SQL);
-		preparedStatement.setString(1, user.getName());
-		preparedStatement.setString(2, user.getEmail());
-		preparedStatement.setString(3, user.getPassword());
-		preparedStatement.setInt(4, user.getId());
-
-		boolean rowUpdated = preparedStatement.executeUpdate() > 0;
-		connection.close();
-		return rowUpdated;
+	public boolean updateUser(User user, Session session) {
+		boolean updated = false;
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.update(user);
+			tx.commit();
+			updated = true;
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+		return updated;
 	}
 
 }
